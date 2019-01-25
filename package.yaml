@@ -1,0 +1,33 @@
+name:                babelfish
+version:             0.1.0.0
+synopsis:            Generate de/serialization code for polyglott systems from JSON schemata.
+#description:
+homepage:            https://github.com/martinring/babelfish
+license:             MIT
+author:              Martin Ring
+maintainer:          martin.ring@dfki.de
+copyright:           2019 Martin Ring
+category:            Code Generation
+extra-source-files:
+- README.md
+
+dependencies:
+  - base
+  - scientific
+  - aeson
+  - text
+  - bytestring
+  - unordered-containers
+  - vector
+  - optparse-applicative
+  - filepath
+  - casing
+  - yaml
+  - file-embed
+  - doctemplates
+  - directory
+
+executables:
+  babelfish:
+    source-dirs:      src
+    main:             Main.hs

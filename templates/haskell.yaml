@@ -1,0 +1,13 @@
+{
+  "types": {
+    "casing": "pascal",
+    "sequences": "[$elem$]",
+    "mappings": {
+      "int": "Int",
+      "string": "String"
+    }    
+  },
+  "output": {
+    "$name.pascal$.hs": { "import": "types.scala" }
+  }
+}

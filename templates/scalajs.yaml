@@ -1,0 +1,13 @@
+{
+  "types": {
+    "casing": "pascal",
+    "sequences": "Seq[$elem$]",
+    "mappings": {
+      "int": "Int",
+      "string": "String"
+    }    
+  },
+  "output": {
+    "src/scala/$for(options.module.scala)$$options.module.scala$/$endfor$$name.pascal$.scala": { "import": "scalajs/types.scala" }
+  }
+}

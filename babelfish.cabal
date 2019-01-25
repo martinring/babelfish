@@ -1,0 +1,48 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 6d58152b2e87dad413d6751bf8655d8f8acbdc55338810bdb60db7b92d2e7319
+
+name:           babelfish
+version:        0.1.0.0
+synopsis:       Generate de/serialization code for polyglott systems from JSON schemata.
+category:       Code Generation
+homepage:       https://github.com/martinring/babelfish
+author:         Martin Ring
+maintainer:     martin.ring@dfki.de
+copyright:      2019 Martin Ring
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+executable babelfish
+  main-is: Main.hs
+  other-modules:
+      Babelfish.Data
+      Babelfish.Generators
+      Babelfish.Project
+      Babelfish.Templates
+      Paths_babelfish
+  hs-source-dirs:
+      src
+  build-depends:
+      aeson
+    , base
+    , bytestring
+    , casing
+    , directory
+    , doctemplates
+    , file-embed
+    , filepath
+    , optparse-applicative
+    , scientific
+    , text
+    , unordered-containers
+    , vector
+    , yaml
+  default-language: Haskell2010
