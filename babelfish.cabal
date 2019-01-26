@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6d58152b2e87dad413d6751bf8655d8f8acbdc55338810bdb60db7b92d2e7319
+-- hash: d0bdf6552b7ff411eb4994203cb098a1ad1d5ad35a6f39c9dc80da9cadf4c2a1
 
 name:           babelfish
 version:        0.1.0.0
@@ -25,6 +25,7 @@ executable babelfish
   other-modules:
       Babelfish.Data
       Babelfish.Generators
+      Babelfish.Messages
       Babelfish.Project
       Babelfish.Templates
       Paths_babelfish

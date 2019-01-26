@@ -8,6 +8,6 @@
     }    
   },
   "output": {
-    "$name.pascal$.hs": { "import": "types.scala" }
+    "$options.base$$for(options.module)$$options.module$/$endfor$$name.pascal$.hs": { "import": "haskell/types.hs" }
   }
 }

@@ -1,0 +1,26 @@
+types:
+  person: 
+  - name: string
+  - age: int    
+  severity: [info, warning, error]
+  list thing:
+  - empty
+  - cons:
+    - head: int
+    - tail: list thing
+api:
+  client:
+  - message:
+      parameters:
+      - from: person
+      - content: string
+      return: int
+  server:
+  - register:
+      parameters:
+      - person: person
+      return: bool
+  - chat:
+      parameters:
+      - message: string
+      return: bool
