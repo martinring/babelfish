@@ -35,7 +35,7 @@ $endfor$
     }
   }
 
-  def local(send: js.Any => Unit)(implementation: $name.pascal$): (js.Any => Unit) = { msg =>
-
+  def local(send: js.Any => Unit)(implementation: $name.pascal$): js.Any => Unit = { msg =>
+    
   }
 }
