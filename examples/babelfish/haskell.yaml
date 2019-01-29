@@ -1,0 +1,21 @@
+{
+  "types": {
+    "casing": "pascal",
+    "sequences": "[$elem$]",
+    "mappings": {
+      "int": "Int",
+      "string": "String"
+    },
+    "files-per-type": false,
+    "files": {
+      "$options.base$$for(options.module)$$options.module$/$endfor$$name.pascal$.hs": { "import": "haskell/types.hs" }
+    }
+  },
+  "api": {
+    "files": {
+      "$options.base$$for(options.module)$$options.module$/$endfor$$api.name.pascal$.hs": { "import": "haskell/api.hs" },
+      "$if(api.local)$$options.base$$for(options.module)$$options.module$/$endfor$$api.name.pascal$/Local.hs$endif$": { "import": "haskell/api-local.hs" },
+      "$if(api.remote)$$options.base$$for(options.module)$$options.module$/$endfor$$api.name.pascal$/Remote.hs$endif$": { "import": "haskell/api-remote.hs" }
+    }
+  }
+}

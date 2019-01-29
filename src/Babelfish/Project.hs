@@ -17,6 +17,9 @@ data Project = Project Name FilePath [Config] deriving Show
 data Config = Compound Name [Name]
             | Config Name FilePath [APIConfig] (Map.HashMap Text Value) deriving Show
 
+isCompoundConfig (Compound _ _) = True
+isCompoundConfig _ = False
+
 configName (Compound n _) = n
 configName (Config n _ _ _) = n
 
@@ -27,14 +30,14 @@ data APIConfig = APIConfig Name InterfaceType deriving Show
 instance FromJSON Project where
   parseJSON = withObject "Project" $ \o -> case Map.toList o of
     [(name, Object m)] -> do
-      path <- m .: "schema"
+      path <- m .:? "schema" .!= (Text.unpack name ++ ".yaml")
       configs <- m .: "configs"  
       Project name path <$> mapM parseConfig (Map.toList configs)
     invalid -> fail "Project definitions must be an object with a single field"
    where parseConfig (name,String c) = return $ Compound name [c]
          parseConfig (name,Array cs) = Compound name <$> mapM parseJSON (Vector.toList cs)
          parseConfig (name,Object o) = do
-           template <- o .:? "template" .!= ("templates/" ++ Text.unpack name ++ ".yaml")
+           template <- o .:? "template" .!= ("babelfish/" ++ Text.unpack name ++ ".yaml")
            apiconfigs <- o .: "api"
            apiconfigs <- mapM parseAPIConfigs (Map.toList apiconfigs)
            options <- o .:? "options" .!= Map.empty
@@ -58,11 +61,10 @@ loadProject path = do
 
 getConfigs :: Text -> [Config] -> [Config]
 getConfigs name confs = case (find ((name ==) . configName) confs) of
-  Nothing -> []
+  Nothing -> if name == "all" then filter (not . isCompoundConfig) confs else []
   Just (Compound n cs) -> concatMap (flip getConfigs confs) cs
   Just (conf) -> [conf]
   
-
 --  "babelfish/messages.yaml":  
 --    "Haskell":
 --      template: "babelfish/templates/haskell.yaml"

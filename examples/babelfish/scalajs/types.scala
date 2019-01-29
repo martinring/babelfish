@@ -63,6 +63,7 @@ $endfor$
     }
     implicit val StringCodec: Codec[String] = Codec(s => s, _.asInstanceOf[String])
     implicit val IntCodec: Codec[Int] = Codec(s => s, _.asInstanceOf[Int])
+    implicit val BooleanCodec: Codec[Boolean] = Codec(s => s, _.asInstanceOf[Boolean])    
   }
 
 
@@ -80,7 +81,7 @@ $endfor$
     def read(from: js.Any): $type.name.pascal$ = from match {
       case from: js.Object => $type.name.pascal$(
 $for(type.constructor.parameter)$
-        Codec.read[$type.constructor.parameter.type$](from.asInstanceOf[js.Dynamic].selectDynamic("$type.constructor.parameter.name.raw$"))$sep$,
+        Codec.read[$type.constructor.parameter.type$](from.asInstanceOf[js.Dictionary[js.Any]]("$type.constructor.parameter.name.raw$"))$sep$,
 $endfor$
 
       )
@@ -98,7 +99,7 @@ $endfor$
     }
 
     def read(from: js.Any): $type.name.pascal$ =       
-     $for(type.constructor)$ if (from == "$type.constructor.name.raw$") $type.name.pascal$.$type.constructor.name.pascal$$sep$
+     $for(type.constructor)$ if (from.asInstanceOf[String] == "$type.constructor.name.raw$") $type.name.pascal$.$type.constructor.name.pascal$$sep$
       else$endfor$
       else sys.error("invalid $type.name.raw$")    
   }
@@ -121,10 +122,10 @@ $endfor$
     }
 
     def read(from: js.Any): $type.name.pascal$ = {
-      val from_ = from.asInstanceOf[js.Dynamic]
-     $for(type.constructor)$$if(type.constructor.empty)$ if (from == "$type.constructor.name.raw$") $type.name.pascal$.$type.constructor.name.pascal$$else$ if (from_.selectDynamic("type") == "$type.constructor.name.raw$") $type.name.pascal$.$type.constructor.name.pascal$(
+      val from_ = from.asInstanceOf[js.Dictionary[js.Any]]
+     $for(type.constructor)$$if(type.constructor.empty)$ if (from.asInstanceOf[String] == "$type.constructor.name.raw$") $type.name.pascal$.$type.constructor.name.pascal$$else$ if (from_("type").asInstanceOf[String] == "$type.constructor.name.raw$") $type.name.pascal$.$type.constructor.name.pascal$(
 $for(type.constructor.parameter)$
-        Codec.read[$type.constructor.parameter.type$](from_.selectDynamic("$type.constructor.parameter.name.raw$"))$sep$,
+        Codec.read[$type.constructor.parameter.type$](from_("$type.constructor.parameter.name.raw$"))$sep$,
 $endfor$
 
       )$endif$$sep$

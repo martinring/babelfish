@@ -1,0 +1,26 @@
+name:                babelfish-example
+version:             0.1.0.0
+#description:
+license:             MIT
+author:              Martin Ring
+maintainer:          martin.ring@dfki.de
+copyright:           2019 Martin Ring
+
+dependencies:
+  - base
+  - scientific
+  - aeson
+  - text
+  - bytestring
+  - unordered-containers
+  - containers
+  - wai-app-static
+  - warp
+  - time
+  - websockets
+  - wai-websockets
+
+executables:
+  babelfish-example:
+    source-dirs:      app
+    main:             Main.hs

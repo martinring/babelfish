@@ -1,20 +1,16 @@
-Messages:  
-  schema: "messages.yaml"    
+messages:
   configs:
-    haskell:
-      template: "../templates/haskell.yaml"
+    haskell:      
       api:
         server: local
-        client: remote      
-      options:    
+        client: remote
+      options:
         base: "app/"
         module: [Example]
     scalajs:
-      template: "../templates/scalajs.yaml"    
       api:
         server: remote
         client: local
       options:
         base: "ui/src/main/scala/"
         module: [de, dfki]
-    default: [haskell,scalajs]

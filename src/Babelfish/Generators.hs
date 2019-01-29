@@ -41,17 +41,42 @@ check name True = [name .= True]
 check name False = []
 
 renderTemplate :: Template -> Generator
-renderTemplate (Template (TypeOptions casing (CompiledTemplate sequences) mappings) outs) name options (Defs tps apis) = map output outs
-  where output (CompiledTemplate p, CompiledTemplate t) = (DT.renderTemplate p context, DT.renderTemplate t context)
-        output other = error $ show other
+renderTemplate 
+  (Template 
+    (TypeOptions casing (CompiledTemplate sequences) mappings perType touts) 
+    (APIOptions aouts)) 
+  name 
+  options 
+  (Defs tps apis) = 
+    filter (not.null.fst) $ (concatMap toutput touts) ++ (concatMap aoutput aouts)
+  where toutput (CompiledTemplate p, CompiledTemplate t) = zip (map (DT.renderTemplate p) context) (map (DT.renderTemplate t) context)
+        toutput other = error $ show other
+        aoutput (CompiledTemplate p, CompiledTemplate t) = zip (map (DT.renderTemplate p) apiContext) (map (DT.renderTemplate t) apiContext)
         tcase = case casing of
           Camel -> pack . camel . unpack
           Pascal -> pack . pascal . unpack
-        context = object $ [                                  
+        apiContext = map (\((API aname ms)) -> object $ [            
+            "name" .= smartName name,            
+            "api" .= object [
+              "name" .= smartName aname,
+              "method" .= map method ms,
+              "local" .= True,
+              "remote" .= True
+            ],            
+            "options" .= options  
+          ]) apis
+        context = 
+          if perType 
+          then map (\tp -> object [
+            "name" .= smartName name,
+            "type" .= tpe tp,
+            "options" .= options
+           ]) tps
+          else [ object $ [                   
             "name" .= smartName name,
             "type" .= map tpe tps,                    
             "options" .= options
-          ]
+           ] ]
         isEmptyRecord (Record _ cs) = null cs
         tpe (Simple r@(Record name _)) = object $ [            
             "name" .= smartName name,
@@ -72,3 +97,8 @@ renderTemplate (Template (TypeOptions casing (CompiledTemplate sequences) mappin
           ]
         typeName (Seq t) = DT.renderTemplate sequences (object ["elem" .= typeName t])
         typeName (Named n) = Map.lookupDefault (tcase n) n mappings
+        method (Method name parameters return) = object $ [
+            "name" .= smartName name,
+            "parameter" .= map param parameters,
+            "return" .= fmap (typeName) return
+          ]

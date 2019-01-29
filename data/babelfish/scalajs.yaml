@@ -4,7 +4,8 @@
     "sequences": "Seq[$elem$]",
     "mappings": {
       "int": "Int",
-      "string": "String"
+      "string": "String",
+      "bool": "Boolean"
     },
     "files-per-type": false,
     "files": {
@@ -13,7 +14,7 @@
   },
   "api": {        
     "files": {
-      "$options.base$$for(options.module)$$options.module$/$endfor$$name.pascal$.scala": { "import": "scalajs/api.scala" }
+      "$options.base$$for(options.module)$$options.module$/$endfor$$api.name.pascal$.scala": { "import": "scalajs/api.scala" }
     }
   }
 }

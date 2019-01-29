@@ -1,0 +1,43 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: bca1ad4a544d1927bb950b13b08211133bff847fc931be3bb19ddc27e9f1a156
+
+name:           babelfish-example
+version:        0.1.0.0
+author:         Martin Ring
+maintainer:     martin.ring@dfki.de
+copyright:      2019 Martin Ring
+license:        MIT
+build-type:     Simple
+
+executable babelfish-example
+  main-is: Main.hs
+  other-modules:
+      Example.Client
+      Example.Client.Local
+      Example.Client.Remote
+      Example.Messages
+      Example.Server
+      Example.Server.Local
+      Example.Server.Remote
+      Paths_babelfish_example
+  hs-source-dirs:
+      app
+  build-depends:
+      aeson
+    , base
+    , bytestring
+    , containers
+    , scientific
+    , text
+    , time
+    , unordered-containers
+    , wai-app-static
+    , wai-websockets
+    , warp
+    , websockets
+  default-language: Haskell2010

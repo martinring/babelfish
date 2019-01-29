@@ -11,7 +11,7 @@ import qualified Data.Text.IO as Text
 import System.FilePath  
 import Text.Casing 
 import Data.String (fromString)
-import Control.Monad (forM_)
+import Control.Monad (forM_,when)
 import System.Directory
 
 import Babelfish.Data
@@ -33,7 +33,7 @@ parseArgs = Args
       <> help "The project file to process")
   <*> strOption
       (  long "lang"
-      <> value "default"
+      <> value "all"
       <> short 'l'
       <> metavar "LANGUAGE"
       <> help "The output target")
@@ -48,7 +48,8 @@ run (Args input language) = do
       case schema of
         Left err -> print err
         Right schema -> do
-          let activeConfigs = getConfigs (Text.pack language) configs
+          let activeConfigs = getConfigs (Text.pack language) configs          
+          when (null activeConfigs) $ putStrLn "no active configurations"
           forM_ activeConfigs $ \(Config cname path apis options) -> do
             gen <- generator path
             Text.putStrLn $ Text.concat ["* Generating '",cname,"' configuration *"]

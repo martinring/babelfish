@@ -21,3 +21,8 @@ cabal.project.local~
 .HTF/
 .ghc.environment.*
 .metals/
+.idea/
+**/ui/target
+**/project/project/
+**/project/target/
+**/ui/static/client.js*
