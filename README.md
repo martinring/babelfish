@@ -1,3 +1,3 @@
 # babelfish
 
-Simple communication for polyglott systems.
+Simple communication for polyglot systems.
